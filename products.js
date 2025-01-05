@@ -32,6 +32,9 @@ const productsSchema = new mongoose.Schema({
         enum: ['S', 'M', 'L']
     }
 })
+productsSchema.methods.greet = function () {
+    console.log('===Hellow HOWDY');
+}
 
 const Product = mongoose.model('Product', productsSchema)
 // if addes addtional props not defined in schema they will be ignored
@@ -42,8 +45,13 @@ const Product = mongoose.model('Product', productsSchema)
 //     console.log(err);
 // })
 
+const findProduct = async () => {
+    const foundProduct = await Product.findOne({name: 'Mountain bike'})
+    foundProduct.greet();
+}
+findProduct();
 // while update the runvalidator is false by default so pass true to run validators
-Product.findOneAndUpdate({name: 'Mountain bike'}, {price: 199}, {new: true, runValidators: true})
+Product.findOneAndUpdate({ name: 'Mountain bike' }, { price: 199 }, { new: true, runValidators: true })
 .then(d=> {
     console.log(d)
 }).catch(err=> {
